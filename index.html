@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Test Entry Log</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="header">
+      <div class="headerLeft">
+        <h1>Test Entry Log</h1>
+        <div class="meta">
+          <span>Sync Name:</span>
+          <span id="projectLabel" class="pill">Not set</span>
+          <button id="btnSetProject" class="linkbtn" type="button">Change</button>
+        </div>
+      </div>
+
+      <div class="headerRight">
+        <button id="btnExportCsv" class="btn ghost" type="button">Export to CSV</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="entryGrid">
+        <div class="field">
+          <div class="lbl">Date</div>
+          <input id="date" type="date" />
+        </div>
+
+        <div class="field">
+          <div class="lbl">Foam</div>
+          <input id="foam" type="text" />
+        </div>
+
+        <div class="field">
+          <div class="lbl">Fuel</div>
+          <input id="fuel" type="text" />
+        </div>
+
+        <div class="field">
+          <div class="lbl">Test Type</div>
+          <select id="testType">
+            <option value="" selected disabled>Test Type</option>
+            <option value="Sprinkler">Sprinkler</option>
+            <option value="Type II">Type II</option>
+            <option value="Type III">Type III</option>
+            <option value="MIL">MIL</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <div class="lbl">Air Temp</div>
+          <div class="airTempRow">
+            <input id="airTemp" type="text" inputmode="decimal" pattern="[0-9]*[.]?[0-9]*" />
+            <button id="btnFetchTemp" class="btn ghost tempBtn" type="button" title="Fetch avg air temp from last 10 min">🌡️</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="lbl">Wind</div>
+          <input id="wind" type="text" inputmode="decimal" pattern="[0-9]*[.]?[0-9]*" />
+        </div>
+
+        <div class="field">
+          <div class="lbl">Fuel Temp</div>
+          <input id="fuelTemp" type="text" inputmode="decimal" pattern="[0-9]*[.]?[0-9]*" />
+        </div>
+
+        <div class="field">
+          <div class="lbl">Solution Temp</div>
+          <input id="solutionTemp" type="text" inputmode="decimal" pattern="[0-9]*[.]?[0-9]*" />
+        </div>
+
+        <div class="field">
+          <div class="lbl">Control</div>
+          <input id="controlTime" type="text" inputmode="numeric" />
+        </div>
+
+        <div class="field">
+          <div class="lbl">Extinguishment</div>
+          <input id="extinguishmentTime" type="text" inputmode="numeric" />
+        </div>
+
+        <div class="buttons">
+          <button id="btnSave" class="btn primary" type="button">Save</button>
+          <button id="btnEdit" class="btn ghost" type="button" disabled>Edit</button>
+          <button id="btnDeleteTop" class="btn danger ghost" type="button" disabled>Delete</button>
+          <button id="btnClear" class="btn ghost" type="button">Clear</button>
+        </div>
+      </div>
+
+      <div id="statusBar" class="statusBar" data-error="0">
+        <div class="statusBarInner">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="statusDot" aria-hidden="true"></span>
+            <span id="status" class="statusText">Loading…</span>
+          </div>
+          <span class="pill">Rev 16</span>
+        </div>
+      </div>
+
+      <div class="tableWrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Foam</th>
+              <th>Fuel</th>
+              <th>Test Type</th>
+              <th>Air Temp</th>
+              <th>Wind</th>
+              <th>Fuel Temp</th>
+              <th>Solution Temp</th>
+              <th>Control</th>
+              <th>Extinguishment</th>
+              <th class="actionsCol">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div id="pagination" class="pagination"></div>
+    </section>
+  </main>
+
+  <dialog id="syncDialog" class="dialog">
+    <form method="dialog" class="dialogCard">
+      <h2>Set Sync Name</h2>
+      <p>This name is used to sync entries across devices.</p>
+      <input id="syncNameInput" type="text" placeholder="e.g., JLC219AN Jan 21" autocomplete="off" />
+      <div class="dialogBtns">
+        <button class="btn ghost" value="cancel" type="submit">Cancel</button>
+        <button class="btn primary" value="ok" type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script defer src="script.js?v=rev16"></script>
+</body>
+</html>
