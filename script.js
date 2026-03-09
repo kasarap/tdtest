@@ -1,4 +1,4 @@
-// Rev 16 – Pagination (25/page), saved time column (military), MIL + Sprinkler test types, compact mobile layout
+// v2 – Ambient Weather temp/wind fetch button, fix btnSave wiring
 window.__appLoaded = true;
 
 const els = {
@@ -18,6 +18,7 @@ const els = {
   extinguishmentTime: document.getElementById("extinguishmentTime"),
 
   btnFetchTemp: document.getElementById("btnFetchTemp"),
+  btnSave: document.getElementById("btnSave"),
   btnEdit: document.getElementById("btnEdit"),
   btnDeleteTop: document.getElementById("btnDeleteTop"),
   btnClear: document.getElementById("btnClear"),
@@ -440,9 +441,15 @@ async function fetchAmbientTemp() {
     const avg = temps.reduce((a, b) => a + b, 0) / temps.length;
     els.airTemp.value = avg.toFixed(1);
 
+    const winds = pool.map(d => d.windspeedmph).filter(w => typeof w === "number");
+    if (winds.length > 0) {
+      const maxWind = Math.max(...winds);
+      els.wind.value = maxWind.toFixed(1);
+    }
+
     const label = recent.length > 0
-      ? `Air temp set to ${avg.toFixed(1)}°F (avg of ${temps.length} reading${temps.length > 1 ? "s" : ""} over last 10 min).`
-      : `Air temp set to ${avg.toFixed(1)}°F (most recent reading — no data in last 10 min).`;
+      ? `Air temp & wind set (avg temp, max wind over last 10 min).`
+      : `Air temp & wind set (most recent reading — no data in last 10 min).`;
     setStatus(label);
   } catch (e) {
     console.error(e);
